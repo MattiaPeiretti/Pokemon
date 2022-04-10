@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500&family=Montserrat:ital,wght@0,200;0,500;1,200;1,300&family=Press+Start+2P&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer components {
+
+    h1 {
+        @apply  text-2xl
+                text-black;
+        font-family: 'Press Start 2P', cursive;
+    }
+
+
+}
