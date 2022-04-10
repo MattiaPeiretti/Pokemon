@@ -7,10 +7,14 @@
 
 @layer components {
 
+    * {
+        font-family: 'Press Start 2P', cursive;
+    }
+
     h1 {
         @apply  text-2xl
                 text-black;
-        font-family: 'Press Start 2P', cursive;
+        
     }
 
 
