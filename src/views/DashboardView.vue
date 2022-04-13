@@ -6,22 +6,17 @@
       pokemon!
     </h1>
 
-    <div class="flex items-center justify-between">
-      <pokemonSearchbar></pokemonSearchbar>
-      <primaryButton>Search</primaryButton>
-    </div>
+    <pokemonSearchbar></pokemonSearchbar>
   </div>
 </template>
 
 <script>
 import pokemonSearchbar from "@/components/pokemon-searchbar.vue";
-import primaryButton from "@/components/basic-ui/primary-button.vue";
 
 export default {
   name: "DashboardView",
   components: {
     pokemonSearchbar,
-    primaryButton,
   },
 };
 </script>
