@@ -7,8 +7,9 @@
           auto-complete-results
           w-full
           text-left
+          mt-2
           absolute
-          border-4 border-black border-t-0
+          border-4 border-black
         "
       >
         <li
@@ -20,21 +21,25 @@
         </li>
       </ul>
     </div>
+    <PokemonSearchbarFilters class="mr-2" />
     <primaryButton>Search</primaryButton>
   </div>
 </template>
 
 <script>
 import { ref } from "vue";
+
 import primaryButton from "@/components/basic-ui/primary-button.vue";
+import PokemonSearchbarFilters from "@/components/pokemon-searchbar-filters.vue";
 
 export default {
   name: "PokemonSearchbar",
   components: {
     primaryButton,
+    PokemonSearchbarFilters,
   },
   setup() {
-    const query = ref("");
+    const searchQuery = ref("");
     const autoCompleteResults = ref([
       "aaaaa",
       "aaaaa",
@@ -44,7 +49,7 @@ export default {
     ]);
 
     return {
-      query,
+      searchQuery,
       autoCompleteResults,
     };
   },
