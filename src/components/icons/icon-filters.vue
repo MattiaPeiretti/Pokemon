@@ -17,6 +17,6 @@
 
 <script>
 export default {
-  name: "icon-filters",
+  name: "iconFilters",
 };
 </script>

@@ -7,6 +7,7 @@
       px-3
       ring-black
       hover:ring-4 hover:text-black
+      inline-flex
     "
   >
     <slot></slot>
