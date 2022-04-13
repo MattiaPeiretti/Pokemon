@@ -5,10 +5,11 @@
       bg-yellow-400
       py-2
       px-3
-      ring-black
-      hover:ring-4 hover:text-black
+      border-4
+      hover:border-black hover:text-black
       inline-flex
     "
+    :class="`${isActivated ? 'border-black text-black' : 'border-white'}`"
   >
     <slot></slot>
   </button>
@@ -17,5 +18,12 @@
 <script>
 export default {
   name: "PrimaryButton",
+  props: {
+    isActivated: {
+      type: Boolean,
+      default: false,
+      required: false,
+    },
+  },
 };
 </script>
