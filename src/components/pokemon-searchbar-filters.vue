@@ -15,6 +15,7 @@
         px-3
         text-left
         w-max
+        bg-white
       "
       :class="`${isModalOpen ? '' : 'hidden'}`"
     >
@@ -43,6 +44,8 @@
 
 <script>
 import { ref } from "vue";
+
+// Components
 import primaryButton from "@/components/basic-ui/primary-button.vue";
 import iconFilters from "@/components/icons/icon-filters.vue";
 
