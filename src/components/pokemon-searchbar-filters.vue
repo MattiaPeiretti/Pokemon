@@ -1,9 +1,10 @@
 <template>
-  <div class="relative">
+  <form class="relative" @submit.prevent="setFilters">
     <primaryButton
-      @click="isModalOpen = !isModalOpen"
-      :isActivated="isModalOpen"
-      >Filters<iconFilters
+      @click="isPanelOpen = !isPanelOpen"
+      :isActivated="isPanelOpen"
+      buttonType="submit"
+      >{{ `${isPanelOpen ? "Apply" : "Filters"}` }}<iconFilters
     /></primaryButton>
     <ul
       class="
@@ -17,33 +18,36 @@
         w-max
         bg-white
       "
-      :class="`${isModalOpen ? '' : 'hidden'}`"
+      :class="`${isPanelOpen ? '' : 'hidden'}`"
     >
       <li>
         Minimum Height:
         <input
           type="number"
           class="border-b-4 border-black outline-none px-2 w-32"
+          v-model="height"
         />
       </li>
       <li>
         Minimum Weight:<input
           type="number"
           class="border-b-4 border-black outline-none px-2 w-32"
+          v-model="weight"
         />
       </li>
       <li>
         Minimum Base Experience:<input
           type="number"
           class="border-b-4 border-black outline-none px-2 w-32"
+          v-model="experience"
         />
       </li>
     </ul>
-  </div>
+  </form>
 </template>
 
 <script>
-import { ref } from "vue";
+import { reactive, toRefs } from "vue";
 
 // Components
 import primaryButton from "@/components/basic-ui/primary-button.vue";
@@ -55,10 +59,25 @@ export default {
     primaryButton,
     iconFilters,
   },
-  setup() {
-    const isModalOpen = ref(false);
+  setup(_, { emit }) {
+    const state = reactive({
+      isPanelOpen: false,
+      height: null,
+      weight: null,
+      experience: null,
+    });
+
+    function setFilters() {
+      emit("filters-applied", {
+        height: state.height,
+        weight: state.weight,
+        experience: state.experience,
+      });
+    }
+
     return {
-      isModalOpen,
+      ...toRefs(state),
+      setFilters,
     };
   },
 };
