@@ -13,8 +13,8 @@
       <ul
         v-if="showAutocompleteBox"
         class="
-          bg-white
           auto-complete-results
+          bg-white
           w-full
           text-left
           mt-2
