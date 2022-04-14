@@ -1,15 +1,14 @@
 <template>
   <form
-    @submit.prevent="submitted"
+    @submit.prevent="search()"
     class="flex items-center justify-between p-6 overflow-visible"
   >
     <div class="relative mr-2 z-50">
       <input
-        class="border-4 border-black py-2 px-3 outline-none"
         type="text"
         @focus="isSearchbarFocused = true"
-        @blur="isSearchbarFocused = false"
         v-model="searchQuery"
+        class="border-4 border-black py-2 px-3 outline-none"
       />
       <ul
         v-if="showAutocompleteBox"
@@ -24,9 +23,10 @@
         "
       >
         <li
-          class="hover:bg-black hover:text-yellow-400 cursor-pointer py-2 px-3"
           v-for="(data, index) in autoCompleteResults"
           v-bind:key="index"
+          @click="search(data.name)"
+          class="hover:bg-black hover:text-yellow-400 cursor-pointer py-2 px-3"
         >
           {{ data.name }}
         </li>
@@ -69,19 +69,21 @@ export default {
 
     function updatePokemon() {
       if (!state.searchQuery) return [];
-
-      return props.allPokemons.results.filter((pokemon) =>
+      return props.allPokemons.data.pokemon_v2_pokemon.filter((pokemon) =>
         pokemon.name.includes(state.searchQuery.toLowerCase())
       );
     }
 
-    function submitted() {
+    // Searches pokemons by current query, or by custom query if passed.
+    function search(query = null) {
+      if (query) state.searchQuery = query;
+      state.isSearchbarFocused = false;
       emit("gotten-results", state.selectedPokemons);
     }
 
     return {
       ...toRefs(state),
-      submitted,
+      search,
     };
   },
 };

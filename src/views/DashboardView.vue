@@ -6,6 +6,7 @@
       pokemon!
     </h1>
     <pokemonSearchbar
+      v-if="!fetching"
       :all-pokemons="allPokemons"
       @gotten-results="updateResults"
       class="z-10"
@@ -27,7 +28,7 @@ import { reactive, toRefs } from "vue";
 import pokemonSearchbar from "@/components/pokemon-searchbar.vue";
 
 // Composables
-import useFetch from "@/composables/useFetch";
+import useFetchGraphql from "@/composables/useFetchGraphql";
 
 export default {
   name: "DashboardView",
@@ -40,9 +41,27 @@ export default {
       results: [],
     });
 
-    const { response, fetchData } = useFetch(
-      `${constants.pokemonAPIBaseURL}?limit=100000&offset=0`,
-      {}
+    // const { response, fetchData } = useFetch(
+    //   `${constants.pokemonRESTAPIBaseURL}?limit=100000&offset=0`,
+    //   {}
+    // );
+    const GQLQuery = `
+    query PokeAPIquery {
+      pokemon_v2_pokemon{
+        id
+        name
+        height
+        weight
+        base_experience
+      }
+    }
+    `;
+
+    const { response, fetchData, fetching } = useFetchGraphql(
+      `${constants.pokemonGraphqlAPIBaseURL}`,
+      GQLQuery,
+      null,
+      null
     );
 
     fetchData();
@@ -55,6 +74,7 @@ export default {
 
     return {
       ...toRefs(state),
+      fetching,
       updateResults,
     };
   },
