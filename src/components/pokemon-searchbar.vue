@@ -32,7 +32,11 @@
         </li>
       </ul>
     </div>
-    <PokemonSearchbarFilters button-type="button" class="mr-2" />
+    <PokemonSearchbarFilters
+      @filters-applied="updateFilters"
+      button-type="button"
+      class="mr-2"
+    />
     <primaryButton button-type="submit">Search</primaryButton>
   </form>
 </template>
@@ -59,6 +63,11 @@ export default {
   setup(props, { emit }) {
     const state = reactive({
       searchQuery: "",
+      filters: {
+        height: null,
+        weight: null,
+        experience: null,
+      },
       selectedPokemons: computed(() => updatePokemon()),
       autoCompleteResults: computed(() => state.selectedPokemons.slice(0, 5)),
       isSearchbarFocused: false,
@@ -69,9 +78,18 @@ export default {
 
     function updatePokemon() {
       if (!state.searchQuery) return [];
-      return props.allPokemons.data.pokemon_v2_pokemon.filter((pokemon) =>
-        pokemon.name.includes(state.searchQuery.toLowerCase())
-      );
+      return props.allPokemons.data.pokemon_v2_pokemon.filter((pokemon) => {
+        if (state.filters.height && pokemon.height < state.filters.height)
+          return false;
+        if (state.filters.weight && pokemon.weight < state.filters.weight)
+          return false;
+        if (
+          state.filters.experience &&
+          pokemon.base_experience < state.filters.experience
+        )
+          return false;
+        return pokemon.name.includes(state.searchQuery.toLowerCase());
+      });
     }
 
     // Searches pokemons by current query, or by custom query if passed.
@@ -81,9 +99,14 @@ export default {
       emit("gotten-results", state.selectedPokemons);
     }
 
+    function updateFilters(data) {
+      state.filters = data;
+    }
+
     return {
       ...toRefs(state),
       search,
+      updateFilters,
     };
   },
 };
