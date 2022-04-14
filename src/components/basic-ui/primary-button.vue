@@ -1,5 +1,6 @@
 <template>
   <button
+    :type="buttonType"
     class="
       text-white
       bg-yellow-400
@@ -23,6 +24,11 @@ export default {
       type: Boolean,
       default: false,
       required: false,
+    },
+    buttonType: {
+      type: String,
+      required: false,
+      default: "button",
     },
   },
 };
