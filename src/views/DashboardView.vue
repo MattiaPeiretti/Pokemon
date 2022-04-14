@@ -11,12 +11,7 @@
       @gotten-results="updateResults"
       class="z-10"
     />
-    <div>
-      <h1>{{ results.length }} Results:</h1>
-      <ul>
-        <li v-for="(item, index) in results" :key="index">{{ item.name }}</li>
-      </ul>
-    </div>
+    <pokemonResults :results="results" />
   </div>
 </template>
 
@@ -26,6 +21,7 @@ import { reactive, toRefs } from "vue";
 
 // Components
 import pokemonSearchbar from "@/components/pokemon-searchbar.vue";
+import pokemonResults from "@/components/pokemon-results.vue";
 
 // Composables
 import useFetchGraphql from "@/composables/useFetchGraphql";
@@ -34,6 +30,7 @@ export default {
   name: "DashboardView",
   components: {
     pokemonSearchbar,
+    pokemonResults,
   },
   setup() {
     const state = reactive({
@@ -53,6 +50,9 @@ export default {
         height
         weight
         base_experience
+        pokemon_v2_pokemonsprites {
+          id
+        }
       }
     }
     `;
@@ -69,7 +69,12 @@ export default {
     state.allPokemons = response;
 
     function updateResults(results) {
-      state.results = results;
+      state.results = results.map((_, index) => {
+        return {
+          ...results[index],
+          imageURL: `${constants.pokemonSpritesBaseURL}/${results[index].pokemon_v2_pokemonsprites[0].id}.png`,
+        };
+      });
     }
 
     return {
