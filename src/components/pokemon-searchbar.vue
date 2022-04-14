@@ -7,10 +7,12 @@
       <input
         class="border-4 border-black py-2 px-3 outline-none"
         type="text"
+        @focus="isSearchbarFocused = true"
+        @blur="isSearchbarFocused = false"
         v-model="searchQuery"
       />
       <ul
-        v-if="autoCompleteResults.length"
+        v-if="showAutocompleteBox"
         class="
           bg-white
           auto-complete-results
@@ -59,6 +61,10 @@ export default {
       searchQuery: "",
       selectedPokemons: computed(() => updatePokemon()),
       autoCompleteResults: computed(() => state.selectedPokemons.slice(0, 5)),
+      isSearchbarFocused: false,
+      showAutocompleteBox: computed(
+        () => state.autoCompleteResults.length && state.isSearchbarFocused
+      ),
     });
 
     function updatePokemon() {
