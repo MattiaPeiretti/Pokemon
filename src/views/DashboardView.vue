@@ -11,6 +11,7 @@
       @gotten-results="updateResults"
       class="z-10"
     />
+    <h2 v-if="fetching">Loading...</h2>
     <pokemonResults :results="results" />
   </div>
 </template>
@@ -24,7 +25,7 @@ import pokemonSearchbar from "@/components/pokemon-searchbar.vue";
 import pokemonResults from "@/components/pokemon-results.vue";
 
 // Composables
-import useFetchGraphql from "@/composables/useFetchGraphql";
+import usePokemonList from "@/composables/usePokemonList";
 
 export default {
   name: "DashboardView",
@@ -38,49 +39,29 @@ export default {
       results: [],
     });
 
-    // const { response, fetchData } = useFetch(
-    //   `${constants.pokemonRESTAPIBaseURL}?limit=100000&offset=0`,
-    //   {}
-    // );
-    const GQLQuery = `
-    query PokeAPIquery {
-      pokemon_v2_pokemon{
-        id
-        name
-        height
-        weight
-        base_experience
-        pokemon_v2_pokemonsprites {
-          id
-        }
-      }
-    }
-    `;
-
-    const { response, fetchData, fetching } = useFetchGraphql(
-      `${constants.pokemonGraphqlAPIBaseURL}`,
-      GQLQuery,
-      null,
-      null
-    );
+    const { fetchData, fetching, response, error } = usePokemonList();
 
     fetchData();
 
     state.allPokemons = response;
 
+    // Generates a handy URL for the spites of the pokemons
     function updateResults(results) {
+      console.log(state.results);
       state.results = results.map((_, index) => {
         return {
           ...results[index],
           imageURL: `${constants.pokemonSpritesBaseURL}/${results[index].pokemon_v2_pokemonsprites[0].id}.png`,
         };
       });
+      console.log(state.results);
     }
 
     return {
       ...toRefs(state),
       fetching,
       updateResults,
+      error,
     };
   },
 };
