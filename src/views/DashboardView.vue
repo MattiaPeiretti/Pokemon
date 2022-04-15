@@ -12,12 +12,11 @@
       class="z-10"
     />
     <h2 v-if="fetching">Loading...</h2>
-    <pokemonResults :results="results" />
+    <pokemonResults class="w-full lg:w-4/6" :results="results" />
   </div>
 </template>
 
 <script>
-import constants from "@/constants";
 import { reactive, toRefs } from "vue";
 
 // Components
@@ -26,6 +25,7 @@ import pokemonResults from "@/components/pokemon-results.vue";
 
 // Composables
 import usePokemonList from "@/composables/usePokemonList";
+import { generateURLForSprites } from "@/utils";
 
 export default {
   name: "DashboardView",
@@ -45,16 +45,9 @@ export default {
 
     state.allPokemons = response;
 
-    // Generates a handy URL for the spites of the pokemons
     function updateResults(results) {
-      console.log(state.results);
-      state.results = results.map((_, index) => {
-        return {
-          ...results[index],
-          imageURL: `${constants.pokemonSpritesBaseURL}/${results[index].pokemon_v2_pokemonsprites[0].id}.png`,
-        };
-      });
-      console.log(state.results);
+      state.results = results;
+      state.results = generateURLForSprites(state.results);
     }
 
     return {
