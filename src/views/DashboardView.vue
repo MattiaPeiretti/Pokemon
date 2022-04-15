@@ -11,13 +11,20 @@
       @gotten-results="updateResults"
       class="z-10"
     />
+
+    <!-- Messages -->
     <h2 class="m-4" v-if="fetching">Loading...</h2>
     <h2 class="m-4" v-if="noResults">
       Looks like that pokemon<br />
       does not exist:/
     </h2>
     <h2 class="m-4" v-if="error">Whoops! An error occurred. Sorry!</h2>
-    <pokemonResults class="w-full lg:w-4/6" :results="results" />
+
+    <pokemonResults
+      v-if="results.length"
+      class="w-full lg:w-4/6"
+      :results="results"
+    />
   </div>
 </template>
 
@@ -30,6 +37,8 @@ import pokemonResults from "@/components/pokemon-results.vue";
 
 // Composables
 import usePokemonList from "@/composables/usePokemonList";
+
+// Utils
 import { generateURLForSprites } from "@/utils";
 
 export default {

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="results.length" class="flex flex-col items-center">
+  <div class="flex flex-col items-center">
     <h1 class="py-8">{{ results.length }} Result(s):</h1>
     <ul class="w-full">
       <pokemon-result-item
@@ -8,6 +8,7 @@
         :data="item"
       />
     </ul>
+    <!-- pagination -->
     <div v-if="pagesAmount > 1" class="flex items-center pt-8 pb-16">
       <buttonPrimary @click="backPage">Prev</buttonPrimary>
       <span class="px-6">{{ page }} / {{ pagesAmount }}</span>
@@ -17,14 +18,11 @@
 </template>
 
 <script>
+import { ref, computed } from "vue";
+
 // Components
 import pokemonResultItem from "@/components/pokemon-results-item.vue";
 import buttonPrimary from "@/components/basic-ui/button-primary";
-
-import { ref, computed } from "vue";
-
-//Composables
-//import useHandlePagination from "@/composables/useHandlePagination";
 
 export default {
   name: "PokemonSearchbarFilters",
