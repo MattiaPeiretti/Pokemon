@@ -3,23 +3,29 @@
     class="
       bg-white
       text-left
-      mt-2
-      border-4 border-black
       flex
-      items-center
       justify-between
+      items-center
+      mt-2
       p-3
+      border-4 border-black
     "
   >
-    <img :src="data.imageURL" alt="" />
+    <img :src="data.imageURL" alt="Pokemon Sprite" />
     <h2 class="px-8">{{ data.name }}</h2>
-    <primary-button>See Details</primary-button>
+    <primary-button :isHREF="true" :destination="url"
+      >See Details</primary-button
+    >
   </li>
+  {{ String(url) }}
 </template>
 
 <script>
+import constants from "@/constants";
+import { computed } from "vue";
+
 // Components
-import primaryButton from "@/components/basic-ui/primary-button.vue";
+import primaryButton from "@/components/basic-ui/button-primary.vue";
 
 export default {
   name: "PokemonSearchbarFilters",
@@ -31,6 +37,12 @@ export default {
       type: Object,
       required: true,
     },
+  },
+  setup(props) {
+    const url = computed(
+      () => constants.pokemonDetailsPageBaseURL + "/" + props.data.name
+    );
+    return { url };
   },
 };
 </script>

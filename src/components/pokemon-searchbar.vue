@@ -8,29 +8,13 @@
         type="text"
         @focus="isSearchbarFocused = true"
         v-model="searchQuery"
-        class="border-4 border-black py-2 px-3 outline-none"
+        class="py-2 px-3 border-4 border-black outline-none"
       />
-      <ul
+      <PokemonSearchbarAutocompleteResults
         v-if="showAutocompleteBox"
-        class="
-          auto-complete-results
-          bg-white
-          w-full
-          text-left
-          mt-2
-          absolute
-          border-4 border-black
-        "
-      >
-        <li
-          v-for="(data, index) in autoCompleteResults"
-          v-bind:key="index"
-          @click="search(data.name)"
-          class="hover:bg-black hover:text-yellow-400 cursor-pointer py-2 px-3"
-        >
-          {{ data.name }}
-        </li>
-      </ul>
+        @clicked-result="search"
+        :results="autoCompleteResults"
+      />
     </div>
     <PokemonSearchbarFilters
       @filters-applied="updateFilters"
@@ -45,14 +29,16 @@
 import { reactive, toRefs, computed } from "vue";
 
 // Components
-import primaryButton from "@/components/basic-ui/primary-button.vue";
+import primaryButton from "@/components/basic-ui/button-primary.vue";
 import PokemonSearchbarFilters from "@/components/pokemon-searchbar-filters.vue";
+import PokemonSearchbarAutocompleteResults from "@/components/pokemon-searchbar-autocomplete.vue";
 
 export default {
   name: "PokemonSearchbar",
   components: {
     primaryButton,
     PokemonSearchbarFilters,
+    PokemonSearchbarAutocompleteResults,
   },
   props: {
     allPokemons: {
@@ -79,6 +65,7 @@ export default {
     function updatePokemon() {
       if (!state.searchQuery) return [];
       return props.allPokemons.data.pokemon_v2_pokemon.filter((pokemon) => {
+        // Datapoints filters
         if (state.filters.height && pokemon.height < state.filters.height)
           return false;
         if (state.filters.weight && pokemon.weight < state.filters.weight)
@@ -94,6 +81,7 @@ export default {
 
     // Searches pokemons by current query, or by custom query if passed.
     function search(query = null) {
+      console.log(query);
       if (query) state.searchQuery = query;
       state.isSearchbarFocused = false;
       emit("gotten-results", state.selectedPokemons);

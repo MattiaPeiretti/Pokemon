@@ -8,15 +8,14 @@
     /></primaryButton>
     <ul
       class="
-        filters-modal
+        bg-white
         absolute
-        border-4 border-black
+        w-max
+        text-left
         mt-2
         py-2
         px-3
-        text-left
-        w-max
-        bg-white
+        border-4 border-black
       "
       :class="`${isPanelOpen ? '' : 'hidden'}`"
     >
@@ -50,7 +49,7 @@
 import { reactive, toRefs } from "vue";
 
 // Components
-import primaryButton from "@/components/basic-ui/primary-button.vue";
+import primaryButton from "@/components/basic-ui/button-primary.vue";
 import iconFilters from "@/components/icons/icon-filters.vue";
 
 export default {
