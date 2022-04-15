@@ -1,13 +1,14 @@
 <template>
   <div
     class="container mx-auto flex flex-col items-center text-left"
-    v-if="!fetching"
+    v-if="!fetching && !error"
   >
     <buttonPrimary class="m-3" :isHREF="true" destination="/"
       >Go back</buttonPrimary
     >
     <details-panel :data="pokemonData" />
   </div>
+  <h2 class="m-4" v-if="error">Whoops! An error occurred. Sorry!</h2>
 </template>
 
 <script>

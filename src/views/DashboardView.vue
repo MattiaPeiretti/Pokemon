@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto flex flex-col items-center">
+  <div class="container mx-auto flex flex-col items-center mb-16">
     <img src="@/assets/img/pikachu.png" alt="pikachu" />
     <h1>
       Look up your favorite <br />
@@ -11,7 +11,12 @@
       @gotten-results="updateResults"
       class="z-10"
     />
-    <h2 v-if="fetching">Loading...</h2>
+    <h2 class="m-4" v-if="fetching">Loading...</h2>
+    <h2 class="m-4" v-if="noResults">
+      Looks like that pokemon<br />
+      does not exist:/
+    </h2>
+    <h2 class="m-4" v-if="error">Whoops! An error occurred. Sorry!</h2>
     <pokemonResults class="w-full lg:w-4/6" :results="results" />
   </div>
 </template>
@@ -37,6 +42,7 @@ export default {
     const state = reactive({
       allPokemons: [],
       results: [],
+      noResults: false,
     });
 
     const { fetchData, fetching, response, error } = usePokemonList();
@@ -47,7 +53,11 @@ export default {
 
     function updateResults(results) {
       state.results = results;
-      state.results = generateURLForSprites(state.results);
+      if (!results.length) state.noResults = true;
+      else {
+        state.noResults = false;
+        state.results = generateURLForSprites(state.results);
+      }
     }
 
     return {
