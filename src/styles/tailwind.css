@@ -17,5 +17,10 @@
         
     }
 
+    h2 {
+        @apply  text-xl
+                text-black;
+        
+    }
 
 }
