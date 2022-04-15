@@ -1,5 +1,5 @@
 <template>
-  <div class="md:flex">
+  <div class="md:flex p-4 mb-16">
     <div class="text-left border-4 border-black">
       <div class="p-3">
         <h1>{{ data.name }}</h1>

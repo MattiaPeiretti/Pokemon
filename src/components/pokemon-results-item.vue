@@ -3,11 +3,12 @@
     class="
       bg-white
       text-left
-      flex
-      justify-between
+      flex flex-col
+      lg:flex-row lg:justify-between
       items-center
       mt-2
       p-3
+      m-3
       border-4 border-black
     "
   >

@@ -10,7 +10,7 @@
       class="
         bg-white
         absolute
-        w-max
+        xl:w-max
         text-left
         mt-2
         py-2

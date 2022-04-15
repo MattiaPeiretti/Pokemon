@@ -1,7 +1,14 @@
 <template>
   <form
     @submit.prevent="search()"
-    class="flex items-center justify-between p-6 overflow-visible"
+    class="
+      flex flex-col
+      lg:flex-row
+      items-center
+      justify-between
+      p-6
+      overflow-visible
+    "
   >
     <div class="relative mr-2 z-50">
       <input
@@ -16,12 +23,14 @@
         :results="autoCompleteResults"
       />
     </div>
-    <PokemonSearchbarFilters
-      @filters-applied="updateFilters"
-      button-type="button"
-      class="mr-2"
-    />
-    <primaryButton button-type="submit">Search</primaryButton>
+    <div class="flex mt-2 lg:mt-0">
+      <PokemonSearchbarFilters
+        @filters-applied="updateFilters"
+        button-type="button"
+        class="mr-2"
+      />
+      <primaryButton button-type="submit">Search</primaryButton>
+    </div>
   </form>
 </template>
 
@@ -81,7 +90,6 @@ export default {
 
     // Searches pokemons by current query, or by custom query if passed.
     function search(query = null) {
-      console.log(query);
       if (query) state.searchQuery = query;
       state.isSearchbarFocused = false;
       emit("gotten-results", state.selectedPokemons);

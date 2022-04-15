@@ -8,7 +8,7 @@
         :data="item"
       />
     </ul>
-    <div class="flex items-center pt-8 pb-16">
+    <div v-if="pagesAmount > 1" class="flex items-center pt-8 pb-16">
       <buttonPrimary @click="backPage">Prev</buttonPrimary>
       <span class="px-6">{{ page }} / {{ pagesAmount }}</span>
       <buttonPrimary @click="nextPage">Next</buttonPrimary>
