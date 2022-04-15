@@ -17,6 +17,8 @@
       <slot></slot>
     </button>
 
+    <!-- <router-link> giving some problems, worth investigating. 
+    As the structure is pretty straight forward, a <a></a> is just fine. -->
     <a
       v-if="isHREF"
       class="
