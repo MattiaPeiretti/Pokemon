@@ -17,7 +17,6 @@
       >See Details</primary-button
     >
   </li>
-  {{ String(url) }}
 </template>
 
 <script>
