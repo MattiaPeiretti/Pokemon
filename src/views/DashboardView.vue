@@ -1,7 +1,7 @@
 <template>
   <div class="container mx-auto flex flex-col items-center mb-16">
     <img src="@/assets/img/pikachu.png" alt="pikachu" />
-    <h1>
+    <h1 class="text-center">
       Look up your favorite <br />
       pokemon!
     </h1>
